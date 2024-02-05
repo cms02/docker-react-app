@@ -1,0 +1,16 @@
+sudo: required
+
+language: generic
+
+services: 
+  - docker
+
+before_insatall:
+  - echo "start creating an image with dockerfile"
+  - docker build -t cms02/docker-react-app -f dockerfile.dev .
+
+script:
+  - docker run -e CI=true cms02/docker-react-app npm run test -- --coverage
+
+after_success:
+  - echo "Test success"
